@@ -126,7 +126,7 @@ public class Movie {
         return rating;
     }
 
-    public void setVoteAverage(Double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
