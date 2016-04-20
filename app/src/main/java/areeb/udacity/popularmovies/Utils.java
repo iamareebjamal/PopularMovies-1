@@ -2,6 +2,7 @@ package areeb.udacity.popularmovies;
 
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.widget.ImageView;
@@ -18,7 +19,7 @@ public class Utils {
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
-                Palette.Swatch swatch = palette.getVibrantSwatch();
+                Palette.Swatch swatch = palette.getDarkVibrantSwatch();
                 TextView title = (TextView) to.findViewById(R.id.movie_title);
 
                 if(swatch!=null) {
@@ -28,4 +29,12 @@ public class Utils {
             }
         });
     }
+
+    public static int getDarkColor(int color){
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f;
+        return Color.HSVToColor(hsv);
+    }
+
 }

@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import areeb.udacity.popularmovies.api.MovieService;
 import areeb.udacity.popularmovies.api.Sort;
 import areeb.udacity.popularmovies.fragment.MoviesFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MoviesFragment moviesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +21,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.root_frame, MoviesFragment.newInstance(Sort.POPULAR))
-                    .commit();
+            moviesFragment = MoviesFragment.newInstance(Sort.POPULAR);
+        } else {
+            moviesFragment = (MoviesFragment) getSupportFragmentManager().getFragment(savedInstanceState, "movie_fragment");
         }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.root_frame, moviesFragment)
+                .commit();
     }
 
     @Override
@@ -46,5 +51,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+
+        getSupportFragmentManager().putFragment(outState, "movie_fragment", moviesFragment);
     }
 }

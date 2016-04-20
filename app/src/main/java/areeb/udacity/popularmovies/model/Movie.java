@@ -6,11 +6,14 @@ package areeb.udacity.popularmovies.model;
  */
 import java.util.ArrayList;
 import java.util.List;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Movie {
+public class Movie implements Parcelable {
 
     private static String BASE_POSTER_URL   = "http://image.tmdb.org/t/p/w185/";
     private static String BASE_BACKDROP_URL = "http://image.tmdb.org/t/p/w500/";
@@ -28,14 +31,6 @@ public class Movie {
     private String releaseDate;
 
     @Expose
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds = new ArrayList<Integer>();
-
-    @Expose
-    @SerializedName("id")
-    private Integer id;
-
-    @Expose
     @SerializedName("original_language")
     private String lang;
 
@@ -48,9 +43,61 @@ public class Movie {
     private String backdrop;
 
     @Expose
+    @SerializedName("id")
+    private Integer id;
+
+    @Expose
     @SerializedName("vote_average")
     private Double rating;
 
+    @Expose
+    @SerializedName("genre_ids")
+    private List<Integer> genreIds = new ArrayList<Integer>();
+
+    /* Parcelable Methods */
+
+    public Movie(Parcel in){
+        poster = in.readString();
+        plot = in.readString();
+        releaseDate = in.readString();
+        lang = in.readString();
+        title = in.readString();
+        backdrop = in.readString();
+        id = in.readInt();
+        rating = in.readDouble();
+        genreIds = new ArrayList<>();
+        in.readList(genreIds, List.class.getClassLoader());
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(poster);
+        parcel.writeString(plot);
+        parcel.writeString(releaseDate);
+        parcel.writeString(lang);
+        parcel.writeString(title);
+        parcel.writeString(backdrop);
+        parcel.writeInt(id);
+        parcel.writeDouble(rating);
+        parcel.writeList(genreIds);
+    }
 
     public String getPoster() {
         return BASE_POSTER_URL + poster;
@@ -136,5 +183,6 @@ public class Movie {
                 "\n\tRelease Date : " + getReleaseDate() + "\n\tPoster : " +
                 getPoster() + "\n\tBackdrop : " + getBackdrop() + "\n\n";
     }
+
 
 }

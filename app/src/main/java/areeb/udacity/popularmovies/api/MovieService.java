@@ -18,11 +18,8 @@ public class MovieService {
 
     private static MovieAPI movieAPI = retrofit.create(MovieAPI.class);
 
-    public static Call<Movies> getPopularMoviesCall(){
-        return movieAPI.getMovies(Sort.POPULAR, BuildConfig.API_KEY);
+    public static Call<Movies> getMoviesCall(Sort sortType){
+        return movieAPI.getMovies(sortType, BuildConfig.API_KEY);
     }
 
-    public static Call<Movies> getTopRatedMoviesCall(){
-        return movieAPI.getMovies(Sort.TOP_RATED, BuildConfig.API_KEY);
-    }
 }

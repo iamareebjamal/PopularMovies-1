@@ -1,9 +1,8 @@
 package areeb.udacity.popularmovies.api;
 
-/**
- * Created by iamareebjamal on 25/3/16.
- */
-public enum Sort {
+import java.io.Serializable;
+
+public enum Sort implements Serializable{
     // Type safe Sorting Modes
 
     POPULAR("popular"),
@@ -15,8 +14,23 @@ public enum Sort {
         this.value = value;
     }
 
+    public static Sort fromString(String name){
+        switch (name){
+            case "popular":
+                return POPULAR;
+            case "top_rated":
+                return TOP_RATED;
+            default:
+                throw new IllegalStateException("Invalid Sort Option");
+        }
+    }
+
     @Override
     public String toString(){
         return value;
+    }
+
+    public boolean equals(Sort sort){
+        return this.value == sort.value;
     }
 }
