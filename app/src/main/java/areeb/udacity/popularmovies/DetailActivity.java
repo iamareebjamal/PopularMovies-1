@@ -15,6 +15,8 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,36 +68,46 @@ public class DetailActivity extends AppCompatActivity {
             public void onGenerated(Palette palette) {
                 Palette.Swatch swatch = palette.getVibrantSwatch();
 
+                int color = getResources().getColor(R.color.color_primary);
+                int titleColor = Color.parseColor("#77000000");
+
                 if(swatch!=null) {
-                    int color = swatch.getRgb();
-                    int titleColor = swatch.getTitleTextColor();
-
-                    collapsingToolbar.setBackgroundColor(color);
-                    collapsingToolbar.setStatusBarScrimColor(Utils.getDarkColor(color));
-                    collapsingToolbar.setContentScrimColor(color);
-
-                    TextView plotHolder = (TextView) findViewById(R.id.plotHolder);
-                    plotHolder.setBackgroundColor(color);
-                    plotHolder.setTextColor(titleColor);
-
-                    RelativeLayout infoPanel = (RelativeLayout) findViewById(R.id.infoPanel);
-                    infoPanel.setBackgroundColor(color);
-
-                    TextView date = (TextView) findViewById(R.id.date);
-                    date.setText(movie.getReleaseDate());
-                    date.setTextColor(titleColor);
-
-                    ImageView dateIcon = (ImageView) findViewById(R.id.dateIcon);
-                    DrawableCompat.setTint(dateIcon.getDrawable(), titleColor);
-
-                    TextView rate = (TextView) findViewById(R.id.rate);
-                    rate.setText(String.valueOf(movie.getRating()) + "/10");
-                    rate.setTextColor(titleColor);
-
-                    ImageView rateIcon = (ImageView) findViewById(R.id.rateIcon);
-                    DrawableCompat.setTint(rateIcon.getDrawable(), titleColor);
-
+                    color = swatch.getRgb();
+                    titleColor = swatch.getTitleTextColor();
                 }
+
+                collapsingToolbar.setBackgroundColor(color);
+                collapsingToolbar.setStatusBarScrimColor(Utils.getDarkColor(color));
+                collapsingToolbar.setContentScrimColor(color);
+
+                TextView plotHolder = (TextView) findViewById(R.id.plotHolder);
+                plotHolder.setBackgroundColor(color);
+                plotHolder.setTextColor(titleColor);
+
+                RelativeLayout infoPanel = (RelativeLayout) findViewById(R.id.infoPanel);
+                infoPanel.setBackgroundColor(color);
+
+                TextView date = (TextView) findViewById(R.id.date);
+                date.setText(movie.getReleaseDate());
+                date.setTextColor(titleColor);
+
+                ImageView dateIcon = (ImageView) findViewById(R.id.dateIcon);
+                DrawableCompat.setTint(dateIcon.getDrawable(), titleColor);
+
+                TextView rate = (TextView) findViewById(R.id.rate);
+                rate.setText(String.valueOf(movie.getRating()) + "/10");
+                rate.setTextColor(titleColor);
+
+                ImageView rateIcon = (ImageView) findViewById(R.id.rateIcon);
+                DrawableCompat.setTint(rateIcon.getDrawable(), titleColor);
+
+                TextView genre = (TextView) findViewById(R.id.genre);
+                genre.setText(movie.getGenres());
+                genre.setTextColor(titleColor);
+
+                ImageView genreIcon = (ImageView) findViewById(R.id.genreIcon);
+                DrawableCompat.setTint(genreIcon.getDrawable(), titleColor);
+
             }
         });
 
@@ -104,9 +116,25 @@ public class DetailActivity extends AppCompatActivity {
 
     private void loadImages() {
         final ImageView poster = (ImageView) findViewById(R.id.poster);
-        ImageView backdrop = (ImageView) findViewById(R.id.backdrop);
 
-        Picasso.with(this).load(movie.getBackdrop()).into(backdrop);
+        final ImageView backdrop = (ImageView) findViewById(R.id.backdrop);
+        backdrop.setBackgroundResource(R.drawable.vector_movies);
+
+        Picasso.with(this).load(movie.getBackdrop()).into(backdrop, new Callback() {
+            @Override
+            public void onSuccess() {
+                // Reset the margin
+                ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(backdrop.getLayoutParams());
+                marginParams.setMargins(0, 0, 0, 0);
+                CollapsingToolbarLayout.LayoutParams layoutParams = new CollapsingToolbarLayout.LayoutParams(marginParams);
+                backdrop.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            public void onError() {  }
+        });
+
+
         Picasso.with(this).load(movie.getPoster()).into(poster, new Callback() {
             @Override
             public void onSuccess() {
@@ -114,9 +142,7 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError() {
-
-            }
+            public void onError() {  }
         });
     }
 
