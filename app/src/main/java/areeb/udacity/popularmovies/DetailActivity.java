@@ -126,7 +126,7 @@ public class DetailActivity extends AppCompatActivity {
         final ImageView poster = (ImageView) findViewById(R.id.poster);
 
         final ImageView backdrop = (ImageView) findViewById(R.id.backdrop);
-        backdrop.setBackgroundResource(R.drawable.vector_movies);
+        backdrop.setImageResource(R.drawable.vector_movies);
 
         Picasso.with(this).load(movie.getBackdrop()).into(backdrop, new Callback() {
             @Override
