@@ -1,6 +1,8 @@
 package areeb.udacity.popularmovies;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,6 +10,7 @@ import android.support.v7.graphics.Palette;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import areeb.udacity.popularmovies.model.Movie;
 
 public class Utils {
 
@@ -35,6 +38,14 @@ public class Utils {
         Color.colorToHSV(color, hsv);
         hsv[2] *= 0.8f;
         return Color.HSVToColor(hsv);
+    }
+
+    public static void shareMovie(Context ctx, Movie movie){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, movie.toString());
+        sendIntent.setType("text/plain");
+        ctx.startActivity(Intent.createChooser(sendIntent, "Share Movie"));
     }
 
 }

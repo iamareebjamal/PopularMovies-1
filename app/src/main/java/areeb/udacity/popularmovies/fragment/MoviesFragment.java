@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import areeb.udacity.popularmovies.R;
 import areeb.udacity.popularmovies.adapter.MovieAdapter;
@@ -31,9 +30,8 @@ import java.util.List;
 public class MoviesFragment extends Fragment implements Callback<Movies> {
     private static final String SORT_TYPE = "sort";
     private Sort sortType = Sort.POPULAR;
+
     private View rootView;
-    private FloatingActionButton fab;
-    private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private Movies movies;
 
@@ -79,6 +77,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
             List<Movie> list = savedInstanceState.getParcelableArrayList("movies");
             movies = new Movies(list);
             movieAdapter.changeDataSet(movies);
+            rootView.findViewById(R.id.hidden).setVisibility(View.GONE);
         } else {
             Call<Movies> call = MovieService.getMoviesCall(sortType);
             call.enqueue(this);
@@ -94,9 +93,10 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
 
     private void setupViews(){
         int columns = 2;
-        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.movie_list);
+        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.movie_list);
         movies = new Movies();
         movieAdapter = new MovieAdapter(getActivity(), movies);
         recyclerView.setAdapter(movieAdapter);
@@ -157,7 +157,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         if(response.isSuccessful()){
             movies = response.body();
             movieAdapter.changeDataSet(movies);
-            Snackbar.make(fab, "Movies loaded", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(rootView, "Movies loaded", Snackbar.LENGTH_SHORT).show();
 
             rootView.findViewById(R.id.hidden).setVisibility(View.GONE);
         }
@@ -165,7 +165,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
 
     @Override
     public void onFailure(final Call<Movies> call, Throwable t) {
-        Snackbar failed = Snackbar.make(fab, "Loading Failed", Snackbar.LENGTH_INDEFINITE);
+        Snackbar failed = Snackbar.make(rootView, "Loading Failed", Snackbar.LENGTH_INDEFINITE);
         failed.setAction("Retry", new View.OnClickListener(){
 
             @Override
@@ -175,6 +175,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
             }
         });
         failed.show();
+        rootView.findViewById(R.id.hidden).setVisibility(View.VISIBLE);
         Log.d("Error", t.getLocalizedMessage());
     }
 }

@@ -213,9 +213,11 @@ public class Movie implements Parcelable {
 
     @Override
     public String toString(){
-        return "Movie : \n\tTitle : " + getTitle() + "\n\tID : " + getId() +
-                "\n\tRelease Date : " + getReleaseDate() + "\n\tPoster : " +
-                getPoster() + "\n\tBackdrop : " + getBackdrop() + "\n\n";
+        return "Title : " + getTitle() +
+                "\nGenre : " + getGenres() +
+                "\nRating : " + getReleaseDate() +
+                "\nRelease Date : " + getReleaseDate() +
+                "\n\n\n" + getPlot();
     }
 
 

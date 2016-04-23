@@ -53,12 +53,20 @@ public class DetailActivity extends AppCompatActivity {
             TextView plot = (TextView) findViewById(R.id.plot);
             plot.setText(movie.getPlot());
 
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Utils.shareMovie(DetailActivity.this, movie);
+                }
+            });
+
             loadImages();
         }
 
     }
 
-    private void setTheme(ImageView imageView){
+    private void setDetails(ImageView imageView){
         if(imageView == null)
             return;
 
@@ -138,7 +146,7 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.with(this).load(movie.getPoster()).into(poster, new Callback() {
             @Override
             public void onSuccess() {
-                setTheme(poster);
+                setDetails(poster);
             }
 
             @Override
