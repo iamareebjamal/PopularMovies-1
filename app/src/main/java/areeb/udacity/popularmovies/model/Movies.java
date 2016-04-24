@@ -11,26 +11,26 @@ public class Movies {
     @SerializedName("results")
     private List<Movie> movies;
 
-    public Movies(){
+    public Movies() {
         movies = new ArrayList<>();
     }
 
-    public Movies(List<Movie> movies){
+    public Movies(List<Movie> movies) {
         this.movies = movies;
     }
 
-    public void setMovies(List<Movie> movies){
-        this.movies = movies;
-    }
-
-    public List<Movie> getMovies(){
+    public List<Movie> getMovies() {
         return movies;
     }
 
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder movieString = new StringBuilder();
-        for(Movie m : movies){
+        for (Movie m : movies) {
             movieString.append(m.toString());
         }
         return movieString.toString();

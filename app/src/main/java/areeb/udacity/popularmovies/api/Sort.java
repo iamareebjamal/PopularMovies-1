@@ -2,7 +2,7 @@ package areeb.udacity.popularmovies.api;
 
 import java.io.Serializable;
 
-public enum Sort implements Serializable{
+public enum Sort implements Serializable {
     // Type safe Sorting Modes
 
     POPULAR("popular"),
@@ -10,16 +10,16 @@ public enum Sort implements Serializable{
 
     private String value;
 
-    Sort(String value){
+    Sort(String value) {
         this.value = value;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return value;
     }
 
-    public boolean equals(Sort sort){
+    public boolean equals(Sort sort) {
         return this.value.equals(sort.value);
     }
 }

@@ -1,10 +1,8 @@
 package areeb.udacity.popularmovies;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import areeb.udacity.popularmovies.api.Sort;
 import areeb.udacity.popularmovies.fragment.MoviesFragment;
 import areeb.udacity.popularmovies.utils.Utils;
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             moviesFragment = MoviesFragment.newInstance(Sort.POPULAR);
         } else {
             moviesFragment = (MoviesFragment) getSupportFragmentManager().getFragment(savedInstanceState, "movie_fragment");
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         toolbar.setTitle(Utils.clean(title));
     }
 
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     */
 
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         getSupportFragmentManager().putFragment(outState, "movie_fragment", moviesFragment);

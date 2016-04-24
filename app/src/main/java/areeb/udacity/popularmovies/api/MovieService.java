@@ -12,13 +12,13 @@ public class MovieService {
     public static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
 
     private static Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     private static MovieAPI movieAPI = retrofit.create(MovieAPI.class);
 
-    public static Call<Movies> getMoviesCall(Sort sortType){
+    public static Call<Movies> getMoviesCall(Sort sortType) {
         return movieAPI.getMovies(sortType, BuildConfig.API_KEY);
     }
 

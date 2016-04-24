@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         ab.setHomeButtonEnabled(true);
 
         //Handle received data
-        if(getIntent().hasExtra("Movie")){
+        if (getIntent().hasExtra("Movie")) {
             movie = getIntent().getParcelableExtra("Movie");
 
             collapsingToolbar = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar));
@@ -64,8 +64,8 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void setDetails(ImageView imageView){
-        if(imageView == null)
+    private void setDetails(ImageView imageView) {
+        if (imageView == null)
             return;
 
         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity {
                 int color = getResources().getColor(R.color.color_primary);
                 int titleColor = Color.parseColor("#77000000");
 
-                if(swatch!=null) {
+                if (swatch != null) {
                     color = swatch.getRgb();
                     titleColor = swatch.getTitleTextColor();
                 }
@@ -125,7 +125,7 @@ public class DetailActivity extends AppCompatActivity {
 
         final ImageView backdrop = (ImageView) findViewById(R.id.backdrop);
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
             backdrop.setBackgroundResource(R.drawable.vector_movies);
 
         Picasso.with(this).load(movie.getBackdrop()).into(backdrop, new Callback() {
@@ -139,7 +139,8 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError() {  }
+            public void onError() {
+            }
         });
 
 
@@ -150,7 +151,8 @@ public class DetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onError() {  }
+            public void onError() {
+            }
         });
     }
 
@@ -163,7 +165,6 @@ public class DetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

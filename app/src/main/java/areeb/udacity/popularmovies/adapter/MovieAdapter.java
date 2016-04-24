@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import areeb.udacity.popularmovies.DetailActivity;
 import areeb.udacity.popularmovies.R;
-import areeb.udacity.popularmovies.utils.Utils;
 import areeb.udacity.popularmovies.model.Movie;
 import areeb.udacity.popularmovies.model.Movies;
+import areeb.udacity.popularmovies.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -28,17 +28,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     private Context context;
     private List<Movie> movies;
 
-    public MovieAdapter(Context context, List<Movie> movies){
+    public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
-        this.movies  = movies;
+        this.movies = movies;
     }
 
-    public MovieAdapter(Context context, Movies movies){
+    public MovieAdapter(Context context, Movies movies) {
         this.context = context;
         this.movies = movies.getMovies();
     }
 
-    public void changeDataSet(Movies movies){
+    public void changeDataSet(Movies movies) {
         this.movies = movies.getMovies();
         notifyDataSetChanged();
     }
@@ -53,7 +53,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(final MovieHolder holder, int position) {
         final Movie movie = movies.get(position);
 
-        if(holder.movieTitle.getText().equals("Movie Title")){
+        if (holder.movieTitle.getText().equals("Movie Title")) {
             holder.rootView.setVisibility(View.GONE);
         }
 
@@ -67,7 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             }
         });
 
-        Picasso.with(context).load(movie.getPoster()).into(holder.posterHolder, new Callback(){
+        Picasso.with(context).load(movie.getPoster()).into(holder.posterHolder, new Callback() {
 
             @Override
             public void onSuccess() {
@@ -97,10 +97,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         public MovieHolder(View itemView) {
             super(itemView);
-            rootView     = (CardView) itemView.findViewById(R.id.rootcard);
+            rootView = (CardView) itemView.findViewById(R.id.rootcard);
             posterHolder = (ImageView) itemView.findViewById(R.id.poster_holder);
-            movieTitle   = (TextView)  itemView.findViewById(R.id.movie_title);
-            moviePanel   = (LinearLayout) itemView.findViewById(R.id.movie_panel);
+            movieTitle = (TextView) itemView.findViewById(R.id.movie_title);
+            moviePanel = (LinearLayout) itemView.findViewById(R.id.movie_panel);
         }
 
     }

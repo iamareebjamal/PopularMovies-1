@@ -109,7 +109,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:srcCompat="@drawable/vector_date"
-                                tools:ignore="MissingPrefix" />
+                                tools:ignore="MissingPrefix"/>
 
                         <TextView
                                 android:id="@+id/date"
@@ -117,7 +117,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="2016-05-06"  />
+                                android:text="2016-05-06"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -131,7 +131,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:srcCompat="@drawable/vector_star"
-                                tools:ignore="MissingPrefix" />
+                                tools:ignore="MissingPrefix"/>
 
                         <TextView
                                 android:id="@+id/rate"
@@ -139,7 +139,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="4.5/5"  />
+                                android:text="4.5/5"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -153,7 +153,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:srcCompat="@drawable/vector_genre"
-                                tools:ignore="MissingPrefix" />
+                                tools:ignore="MissingPrefix"/>
 
                         <TextView
                                 android:id="@+id/genre"
@@ -161,7 +161,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="Comedy, Sci-Fi"  />
+                                android:text="Comedy, Sci-Fi"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -181,22 +181,22 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                <TextView
-                        android:id="@+id/plotHolder"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp"
-                        android:background="@color/color_primary"
-                        android:textSize="15sp"
-                        android:text="Plot" />
+                    <TextView
+                            android:id="@+id/plotHolder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="15dp"
+                            android:background="@color/color_primary"
+                            android:textSize="15sp"
+                            android:text="Plot"/>
 
-                <TextView
-                        android:id="@+id/plot"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:padding="12dp"
-                        android:text="Plot" />
+                    <TextView
+                            android:id="@+id/plot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:padding="12dp"
+                            android:text="Plot"/>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

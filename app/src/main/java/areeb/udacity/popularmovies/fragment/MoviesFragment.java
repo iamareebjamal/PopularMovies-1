@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import areeb.udacity.popularmovies.MainActivity;
@@ -39,16 +37,16 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     private MovieAdapter movieAdapter;
     private Movies movies;
 
+    public MoviesFragment() {
+        // Required empty public constructor
+    }
+
     public static MoviesFragment newInstance(Sort sortType) {
         MoviesFragment fragment = new MoviesFragment();
         Bundle args = new Bundle();
         args.putSerializable(SORT_TYPE, sortType);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public MoviesFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -62,7 +60,6 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,10 +71,10 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(savedInstanceState!=null && savedInstanceState.containsKey("movies")){
+        if (savedInstanceState != null && savedInstanceState.containsKey("movies")) {
             List<Movie> list = savedInstanceState.getParcelableArrayList("movies");
             movies = new Movies(list);
             movieAdapter.changeDataSet(movies);
@@ -90,12 +87,12 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState){
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("movies", (ArrayList) movies.getMovies());
     }
 
-    private void setupViews(){
+    private void setupViews() {
         int columns = 2;
 
         final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -105,7 +102,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         movieAdapter = new MovieAdapter(getActivity(), movies);
         recyclerView.setAdapter(movieAdapter);
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             columns = 4;
         }
 
@@ -118,7 +115,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
             @Override
             public void onClick(View view) {
                 // Toggle
-                if(sortType.equals(Sort.POPULAR))
+                if (sortType.equals(Sort.POPULAR))
                     refresh(Sort.TOP_RATED);
                 else
                     refresh(Sort.POPULAR);
@@ -134,12 +131,12 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         });
     }
 
-    private void setRandomLoadingMessage(){
+    private void setRandomLoadingMessage() {
         TextView loading = (TextView) rootView.findViewById(R.id.loadingMessage);
         loading.setText(Utils.getNextLoadingMessage());
     }
 
-    private void refresh(Sort sortType){
+    private void refresh(Sort sortType) {
         this.sortType = sortType;
 
         movies.getMovies().clear();
@@ -155,7 +152,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
 
     @Override
     public void onResponse(Call<Movies> call, Response<Movies> response) {
-        if(response.isSuccessful()){
+        if (response.isSuccessful()) {
             movies = response.body();
             movieAdapter.changeDataSet(movies);
             Snackbar.make(rootView, "Movies loaded", Snackbar.LENGTH_SHORT).show();
@@ -169,7 +166,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     @Override
     public void onFailure(final Call<Movies> call, Throwable t) {
         Snackbar failed = Snackbar.make(rootView, "Loading Failed", Snackbar.LENGTH_INDEFINITE);
-        failed.setAction("Retry", new View.OnClickListener(){
+        failed.setAction("Retry", new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
