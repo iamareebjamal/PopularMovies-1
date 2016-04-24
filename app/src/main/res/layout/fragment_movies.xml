@@ -6,12 +6,20 @@
             android:layout_height="match_parent"
             tools:context="areeb.udacity.popularmovies.MoviesFragment">
 
+
     <RelativeLayout
             android:id="@+id/hidden"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="30dp">
+
+        <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
 
         <ImageView
                 android:layout_width="150dp"
@@ -22,6 +30,7 @@
                 tools:ignore="MissingPrefix"/>
 
         <TextView
+                android:id="@+id/loadingMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/empty"
@@ -38,6 +47,8 @@
             android:padding="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

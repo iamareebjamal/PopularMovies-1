@@ -7,17 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import areeb.udacity.popularmovies.api.Sort;
 import areeb.udacity.popularmovies.fragment.MoviesFragment;
+import areeb.udacity.popularmovies.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
     private MoviesFragment moviesFragment;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if(savedInstanceState == null){
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void setTitle(String title){
+        toolbar.setTitle(Utils.clean(title));
+    }
+
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    */
 
     @Override
     protected void onSaveInstanceState(Bundle outState){

@@ -12,13 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import areeb.udacity.popularmovies.MainActivity;
 import areeb.udacity.popularmovies.R;
 import areeb.udacity.popularmovies.adapter.MovieAdapter;
 import areeb.udacity.popularmovies.api.MovieService;
 import areeb.udacity.popularmovies.api.Sort;
 import areeb.udacity.popularmovies.model.Movie;
 import areeb.udacity.popularmovies.model.Movies;
+import areeb.udacity.popularmovies.utils.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,47 +110,44 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         }
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), columns));
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if (dy > 0 ||dy<0 && fab.isShown())
-                    fab.hide();
-            }
+        Utils.setScrollBehavior(fab, recyclerView);
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE){
-                    fab.show();
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
+        setRandomLoadingMessage();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeSort(Sort.TOP_RATED);
+                // Toggle
+                if(sortType.equals(Sort.POPULAR))
+                    refresh(Sort.TOP_RATED);
+                else
+                    refresh(Sort.POPULAR);
             }
         });
 
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast.makeText(getContext(), "Sort by", Toast.LENGTH_SHORT).show();
-                return false;
+                Toast.makeText(getContext(), "Toggle Sort Type", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
 
-    private void changeSort(Sort sortType){
-        if(sortType.equals(this.sortType))
-            return;
+    private void setRandomLoadingMessage(){
+        TextView loading = (TextView) rootView.findViewById(R.id.loadingMessage);
+        loading.setText(Utils.getNextLoadingMessage());
+    }
+
+    private void refresh(Sort sortType){
         this.sortType = sortType;
+
         movies.getMovies().clear();
         movieAdapter.notifyDataSetChanged();
         Call<Movies> call = MovieService.getMoviesCall(sortType);
         call.enqueue(this);
+
+        setRandomLoadingMessage();
 
         rootView.findViewById(R.id.hidden).setVisibility(View.VISIBLE);
     }
@@ -160,6 +161,8 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
             Snackbar.make(rootView, "Movies loaded", Snackbar.LENGTH_SHORT).show();
 
             rootView.findViewById(R.id.hidden).setVisibility(View.GONE);
+
+            ((MainActivity) getActivity()).setTitle(sortType.toString() + " Movies");
         }
     }
 
@@ -170,8 +173,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
 
             @Override
             public void onClick(View view) {
-                Call<Movies> duplicate = call.clone();
-                duplicate.enqueue(MoviesFragment.this);
+                refresh(sortType);
             }
         });
         failed.show();

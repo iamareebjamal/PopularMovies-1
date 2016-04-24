@@ -10,19 +10,8 @@ public enum Sort implements Serializable{
 
     private String value;
 
-    private Sort(String value){
+    Sort(String value){
         this.value = value;
-    }
-
-    public static Sort fromString(String name){
-        switch (name){
-            case "popular":
-                return POPULAR;
-            case "top_rated":
-                return TOP_RATED;
-            default:
-                throw new IllegalStateException("Invalid Sort Option");
-        }
     }
 
     @Override
@@ -31,6 +20,6 @@ public enum Sort implements Serializable{
     }
 
     public boolean equals(Sort sort){
-        return this.value == sort.value;
+        return this.value.equals(sort.value);
     }
 }

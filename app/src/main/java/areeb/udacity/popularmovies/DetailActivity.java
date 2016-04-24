@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -16,11 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import areeb.udacity.popularmovies.model.Movie;
+import areeb.udacity.popularmovies.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -100,21 +98,21 @@ public class DetailActivity extends AppCompatActivity {
                 date.setTextColor(titleColor);
 
                 ImageView dateIcon = (ImageView) findViewById(R.id.dateIcon);
-                DrawableCompat.setTint(dateIcon.getDrawable(), titleColor);
+                Utils.setTint(dateIcon, titleColor);
 
                 TextView rate = (TextView) findViewById(R.id.rate);
                 rate.setText(String.valueOf(movie.getRating()) + "/10");
                 rate.setTextColor(titleColor);
 
                 ImageView rateIcon = (ImageView) findViewById(R.id.rateIcon);
-                DrawableCompat.setTint(rateIcon.getDrawable(), titleColor);
+                Utils.setTint(rateIcon, titleColor);
 
                 TextView genre = (TextView) findViewById(R.id.genre);
                 genre.setText(movie.getGenres());
                 genre.setTextColor(titleColor);
 
                 ImageView genreIcon = (ImageView) findViewById(R.id.genreIcon);
-                DrawableCompat.setTint(genreIcon.getDrawable(), titleColor);
+                Utils.setTint(genreIcon, titleColor);
 
             }
         });
@@ -126,7 +124,9 @@ public class DetailActivity extends AppCompatActivity {
         final ImageView poster = (ImageView) findViewById(R.id.poster);
 
         final ImageView backdrop = (ImageView) findViewById(R.id.backdrop);
-        backdrop.setImageResource(R.drawable.vector_movies);
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
+            backdrop.setBackgroundResource(R.drawable.vector_movies);
 
         Picasso.with(this).load(movie.getBackdrop()).into(backdrop, new Callback() {
             @Override
