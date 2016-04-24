@@ -193,7 +193,7 @@ public class Movie implements Parcelable {
 
 
     public Double getRating() {
-        return rating;
+        return rating ;
     }
 
     public void setRating(Double rating) {
@@ -204,7 +204,7 @@ public class Movie implements Parcelable {
     public String toString() {
         return "Title : " + getTitle() +
                 "\nGenre : " + getGenres() +
-                "\nRating : " + getRating() +
+                "\nRating : " + getRating() + "/10" +
                 "\nRelease Date : " + getReleaseDate() +
                 "\n\n\n" + getPlot();
     }

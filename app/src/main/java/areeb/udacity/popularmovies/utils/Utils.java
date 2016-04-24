@@ -25,16 +25,23 @@ public class Utils {
             return;
 
         Bitmap bitmap = ((BitmapDrawable) from.getDrawable()).getBitmap();
+
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
                 Palette.Swatch swatch = palette.getDarkVibrantSwatch();
                 TextView title = (TextView) to.findViewById(R.id.movie_title);
 
+                int bgColor = Color.parseColor("#eeeeee");
+                int textColor = Color.parseColor("#333333");
+
                 if (swatch != null) {
-                    to.setBackgroundColor(swatch.getRgb());
-                    title.setTextColor(swatch.getTitleTextColor());
+                    bgColor = swatch.getRgb();
+                    textColor = swatch.getTitleTextColor();
                 }
+
+                to.setBackgroundColor(bgColor);
+                title.setTextColor(textColor);
             }
         });
     }

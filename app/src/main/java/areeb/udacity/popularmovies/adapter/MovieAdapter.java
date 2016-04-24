@@ -2,6 +2,7 @@ package areeb.udacity.popularmovies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,6 +57,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         if (holder.movieTitle.getText().equals("Movie Title")) {
             holder.rootView.setVisibility(View.GONE);
         }
+        
+        holder.movieTitle.setText(movie.getTitle());
+
+        holder.moviePanel.setBackgroundColor(Color.parseColor("#eeeeee"));
+        holder.movieTitle.setTextColor(Color.parseColor("#333333"));
 
         holder.rootView.setPreventCornerOverlap(false);
         holder.rootView.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +77,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
             @Override
             public void onSuccess() {
-                holder.movieTitle.setText(movie.getTitle());
                 holder.rootView.setVisibility(View.VISIBLE);
                 Utils.colorize(holder.posterHolder, holder.moviePanel);
             }
