@@ -17,6 +17,8 @@ import java.util.List;
 
 public class Movie implements Parcelable {
 
+    public static final String TAG = "Movie";
+
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
         public Movie createFromParcel(Parcel in) {
@@ -193,7 +195,7 @@ public class Movie implements Parcelable {
 
 
     public Double getRating() {
-        return rating ;
+        return rating;
     }
 
     public void setRating(Double rating) {

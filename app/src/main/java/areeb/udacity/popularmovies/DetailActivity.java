@@ -1,7 +1,6 @@
 package areeb.udacity.popularmovies;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ public class DetailActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbar;
     private Movie movie;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +38,8 @@ public class DetailActivity extends AppCompatActivity {
         ab.setHomeButtonEnabled(true);
 
         //Handle received data
-        if (getIntent().hasExtra("Movie")) {
-            movie = getIntent().getParcelableExtra("Movie");
+        if (getIntent().hasExtra(Movie.TAG)) {
+            movie = getIntent().getParcelableExtra(Movie.TAG);
 
             collapsingToolbar = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar));
             collapsingToolbar.setTitle(movie.getTitle());
@@ -55,13 +53,12 @@ public class DetailActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Utils.shareMovie(DetailActivity.this, movie);
+                    Utils.from(DetailActivity.this).shareMovie(movie);
                 }
             });
 
             loadImages();
         }
-
     }
 
     private void setDetails(ImageView imageView) {
@@ -75,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
                 Palette.Swatch swatch = palette.getVibrantSwatch();
 
                 int color = getResources().getColor(R.color.color_primary);
-                int titleColor = Color.parseColor("#77000000");
+                int titleColor = getResources().getColor(R.color.basic_dark_transparent);
 
                 if (swatch != null) {
                     color = swatch.getRgb();
@@ -116,7 +113,6 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

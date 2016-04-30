@@ -20,30 +20,12 @@ import areeb.udacity.popularmovies.model.Movie;
 
 public class Utils {
 
-    public static void colorize(ImageView from, final LinearLayout to) {
-        if (from == null || to == null || from.getDrawable() == null)
-            return;
+    private Context context;
 
-        Bitmap bitmap = ((BitmapDrawable) from.getDrawable()).getBitmap();
-
-        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                Palette.Swatch swatch = palette.getDarkVibrantSwatch();
-                TextView title = (TextView) to.findViewById(R.id.movie_title);
-
-                int bgColor = Color.parseColor("#eeeeee");
-                int textColor = Color.parseColor("#333333");
-
-                if (swatch != null) {
-                    bgColor = swatch.getRgb();
-                    textColor = swatch.getTitleTextColor();
-                }
-
-                to.setBackgroundColor(bgColor);
-                title.setTextColor(textColor);
-            }
-        });
+    public static Utils from(Context context) {
+        Utils utils = new Utils();
+        utils.context = context;
+        return utils;
     }
 
     public static int getDarkColor(int color) {
@@ -56,25 +38,6 @@ public class Utils {
     public static void setTint(ImageView imageView, int tintColor) {
         Drawable wrapped = DrawableCompat.wrap(imageView.getDrawable());
         DrawableCompat.setTint(wrapped, tintColor);
-    }
-
-    public static void shareMovie(Context ctx, Movie movie) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, movie.toString());
-        sendIntent.setType("text/plain");
-        ctx.startActivity(Intent.createChooser(sendIntent, "Share Movie"));
-    }
-
-    public static String getNextLoadingMessage() {
-        String loading[] = {"Loading the Projector...", "Preparing the Lights", "Handling the Camera...",
-                "Checking Sound...", "Unloading the Action...", "Cloning Chuck Norris...",
-                "Slaying some Dragons...", "Killing the Krakken...", "Some Netflix and Chilling...",
-                "Finding the Lost Tomb...", "Punching some villains...", "Destroying Cities...",
-                "Saving innocent People...", "Flirting with Chicks...", "Jumping off Trains...",
-                "Travelling to Future...", "Escaping from Past...", "Winning the hearts of People..."};
-
-        return loading[(int) (Math.random() * loading.length)];
     }
 
     public static void setScrollBehavior(final FloatingActionButton fab, RecyclerView recyclerView) {
@@ -123,6 +86,45 @@ public class Utils {
         }
 
         return builder.toString();
+    }
+
+    public void colorize(ImageView from, final LinearLayout to) {
+        if (from == null || to == null || from.getDrawable() == null)
+            return;
+
+        Bitmap bitmap = ((BitmapDrawable) from.getDrawable()).getBitmap();
+
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                Palette.Swatch swatch = palette.getDarkVibrantSwatch();
+                TextView title = (TextView) to.findViewById(R.id.movie_title);
+
+                int bgColor = context.getColor(R.color.basic_light);
+                int textColor = context.getColor(R.color.basic_dark);
+
+                if (swatch != null) {
+                    bgColor = swatch.getRgb();
+                    textColor = swatch.getTitleTextColor();
+                }
+
+                to.setBackgroundColor(bgColor);
+                title.setTextColor(textColor);
+            }
+        });
+    }
+
+    public void shareMovie(Movie movie) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, movie.toString());
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, context.getResources().getString(R.string.share_movie)));
+    }
+
+    public String getNextLoadingMessage() {
+        String loading[] = context.getResources().getStringArray(R.array.loading_messages);
+        return loading[(int) (Math.random() * loading.length)];
     }
 
 }

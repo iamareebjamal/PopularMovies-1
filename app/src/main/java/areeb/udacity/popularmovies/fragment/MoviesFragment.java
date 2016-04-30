@@ -30,7 +30,11 @@ import java.util.List;
 
 
 public class MoviesFragment extends Fragment implements Callback<Movies> {
+    private static final String TAG = "Movies Fragment";
+
     private static final String SORT_TYPE = "sort";
+    private static final String MOVIE_KEY = "movies";
+
     private Sort sortType = Sort.POPULAR;
 
     private View rootView;
@@ -74,8 +78,8 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey("movies")) {
-            List<Movie> list = savedInstanceState.getParcelableArrayList("movies");
+        if (savedInstanceState != null && savedInstanceState.containsKey(MOVIE_KEY)) {
+            List<Movie> list = savedInstanceState.getParcelableArrayList(MOVIE_KEY);
             movies = new Movies(list);
             movieAdapter.changeDataSet(movies);
             rootView.findViewById(R.id.hidden).setVisibility(View.GONE);
@@ -89,7 +93,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("movies", (ArrayList) movies.getMovies());
+        outState.putParcelableArrayList(MOVIE_KEY, (ArrayList) movies.getMovies());
     }
 
     private void setupViews() {
@@ -125,7 +129,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast.makeText(getContext(), "Toggle Sort Type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getContext().getString(R.string.toggle_movies), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -133,7 +137,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
 
     private void setRandomLoadingMessage() {
         TextView loading = (TextView) rootView.findViewById(R.id.loadingMessage);
-        loading.setText(Utils.getNextLoadingMessage());
+        loading.setText(Utils.from(getActivity()).getNextLoadingMessage());
     }
 
     private void refresh(Sort sortType) {
@@ -155,7 +159,7 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         if (response.isSuccessful()) {
             movies = response.body();
             movieAdapter.changeDataSet(movies);
-            Snackbar.make(rootView, "Movies loaded", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(rootView, getActivity().getString(R.string.movies_load_success), Snackbar.LENGTH_SHORT).show();
 
             rootView.findViewById(R.id.hidden).setVisibility(View.GONE);
 
@@ -165,8 +169,8 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
 
     @Override
     public void onFailure(final Call<Movies> call, Throwable t) {
-        Snackbar failed = Snackbar.make(rootView, "Loading Failed", Snackbar.LENGTH_INDEFINITE);
-        failed.setAction("Retry", new View.OnClickListener() {
+        Snackbar failed = Snackbar.make(rootView, getActivity().getString(R.string.image_load_error), Snackbar.LENGTH_INDEFINITE);
+        failed.setAction(getActivity().getString(R.string.movies_load_retry), new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -175,6 +179,6 @@ public class MoviesFragment extends Fragment implements Callback<Movies> {
         });
         failed.show();
         rootView.findViewById(R.id.hidden).setVisibility(View.VISIBLE);
-        Log.d("Error", t.getLocalizedMessage());
+        Log.d(TAG, t.getLocalizedMessage());
     }
 }

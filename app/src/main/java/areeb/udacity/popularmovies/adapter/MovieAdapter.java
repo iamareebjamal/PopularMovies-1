@@ -2,7 +2,6 @@ package areeb.udacity.popularmovies.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,10 +21,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by iamareebjamal on 25/3/16.
- */
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
+
+    public static final String TAG = "Movie Adapter";
+
     private Context context;
     private List<Movie> movies;
 
@@ -54,21 +53,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void onBindViewHolder(final MovieHolder holder, int position) {
         final Movie movie = movies.get(position);
 
-        if (holder.movieTitle.getText().equals("Movie Title")) {
+        if (holder.movieTitle.getText().equals(context.getString(R.string.movie_title))) {
             holder.rootView.setVisibility(View.GONE);
         }
-        
+
         holder.movieTitle.setText(movie.getTitle());
 
-        holder.moviePanel.setBackgroundColor(Color.parseColor("#eeeeee"));
-        holder.movieTitle.setTextColor(Color.parseColor("#333333"));
+        holder.moviePanel.setBackgroundColor(context.getResources().getColor(R.color.basic_light));
+        holder.movieTitle.setTextColor(context.getResources().getColor(R.color.basic_dark));
 
         holder.rootView.setPreventCornerOverlap(false);
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("Movie", movie);
+                intent.putExtra(Movie.TAG, movie);
                 context.startActivity(intent);
             }
         });
@@ -78,12 +77,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
             @Override
             public void onSuccess() {
                 holder.rootView.setVisibility(View.VISIBLE);
-                Utils.colorize(holder.posterHolder, holder.moviePanel);
+                Utils.from(context).colorize(holder.posterHolder, holder.moviePanel);
             }
 
             @Override
             public void onError() {
-                Log.d("Image Load", "Error loading image");
+                Log.d(TAG, context.getString(R.string.image_load_error));
             }
         });
 

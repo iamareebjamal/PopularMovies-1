@@ -9,6 +9,8 @@ import areeb.udacity.popularmovies.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String FRAGMENT_KEY = "movie_fragment";
+
     private MoviesFragment moviesFragment;
     private Toolbar toolbar;
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             moviesFragment = MoviesFragment.newInstance(Sort.POPULAR);
         } else {
-            moviesFragment = (MoviesFragment) getSupportFragmentManager().getFragment(savedInstanceState, "movie_fragment");
+            moviesFragment = (MoviesFragment) getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
         }
 
         getSupportFragmentManager().beginTransaction()
@@ -63,6 +65,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        getSupportFragmentManager().putFragment(outState, "movie_fragment", moviesFragment);
+        getSupportFragmentManager().putFragment(outState, FRAGMENT_KEY, moviesFragment);
     }
 }

@@ -24,7 +24,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Movie Title"
+                android:text="@string/movie_title"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:scrollHorizontally="true"
