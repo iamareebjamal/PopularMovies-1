@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import areeb.udacity.popularmovies.model.Movie;
 import areeb.udacity.popularmovies.utils.Utils;
 import com.squareup.picasso.Callback;
@@ -54,6 +55,14 @@ public class DetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Utils.from(DetailActivity.this).shareMovie(movie);
+                }
+            });
+
+            fab.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.share_movie), Toast.LENGTH_SHORT).show();
+                    return true;
                 }
             });
 
