@@ -100,8 +100,8 @@ public class Utils {
                 Palette.Swatch swatch = palette.getDarkVibrantSwatch();
                 TextView title = (TextView) to.findViewById(R.id.movie_title);
 
-                int bgColor = context.getColor(R.color.basic_light);
-                int textColor = context.getColor(R.color.basic_dark);
+                int bgColor = context.getResources().getColor(R.color.basic_light);
+                int textColor = context.getResources().getColor(R.color.basic_dark);
 
                 if (swatch != null) {
                     bgColor = swatch.getRgb();
