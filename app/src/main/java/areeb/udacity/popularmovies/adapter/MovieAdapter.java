@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
-    public static final String TAG = "Movie Adapter";
+    private static final String TAG = "Movie Adapter";
 
     private Context context;
     private List<Movie> movies;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="window_bg">#dddddd</color>
     <color name="color_primary">#ff9800</color>
     <color name="color_primary_dark">#f57c00</color>
     <color name="color_accent">#aa00ff</color>

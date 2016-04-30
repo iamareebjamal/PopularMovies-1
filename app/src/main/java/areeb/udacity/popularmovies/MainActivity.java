@@ -9,7 +9,7 @@ import areeb.udacity.popularmovies.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String FRAGMENT_KEY = "movie_fragment";
+    private static final String FRAGMENT_KEY = "movie_fragment";
 
     private MoviesFragment moviesFragment;
     private Toolbar toolbar;

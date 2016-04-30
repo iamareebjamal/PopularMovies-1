@@ -30,9 +30,8 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-    private static String BASE_POSTER_URL = "http://image.tmdb.org/t/p/w185/";
-    private static String BASE_BACKDROP_URL = "http://image.tmdb.org/t/p/w500/";
-    private static SparseArray<String> genre = new SparseArray<String>() {{
+
+    private static final SparseArray<String> genre = new SparseArray<String>() {{
         put(28, "Action");
         put(12, "Adventure");
         put(16, "Animation");
@@ -82,9 +81,9 @@ public class Movie implements Parcelable {
     /* Parcelable Methods */
     @Expose
     @SerializedName("genre_ids")
-    private List<Integer> genreIds = new ArrayList<Integer>();
+    private List<Integer> genreIds = new ArrayList<>();
 
-    public Movie(Parcel in) {
+    private Movie(Parcel in) {
         poster = in.readString();
         plot = in.readString();
         releaseDate = in.readString();
@@ -116,7 +115,7 @@ public class Movie implements Parcelable {
     }
 
     public String getPoster() {
-        return BASE_POSTER_URL + poster;
+        return "http://image.tmdb.org/t/p/w185/" + poster;
     }
 
     public void setPoster(String poster) {
@@ -185,7 +184,7 @@ public class Movie implements Parcelable {
     }
 
     public String getBackdrop() {
-        return BASE_BACKDROP_URL + backdrop;
+        return "http://image.tmdb.org/t/p/w185/" + backdrop;
     }
 
 
